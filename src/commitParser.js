@@ -15,21 +15,20 @@ class CommitsParser {
   }
 
   getPairs(messages) {
-    const pairs = messages.map(extractString.bind(null, this.regex)).filter(Boolean);
-    return pairs.map(function (pair) {
-      return pair.split('/');
-    });
+    return messages.map((msg) => {
+      const pair = [];
+      const matches = this.regex.exec(msg);
+      if (matches && matches[1]) pair.push(matches[1]);
+      if (matches && matches[2]) pair.push(matches[2]);
+      this.regex.lastIndex = 0;
+      return pair;
+    })
   }
 }
 
 function parseCommitPairsWithTotalCommits(pair) {
   const pairs = validPairs(pair);
   return getCommittersWithCommits(pairs);
-}
-
-function extractString(regex, msg) {
-  const match = msg.match(regex);
-  return (match) ? match[0].substring(1, match[0].length - 1) : match;
 }
 
 function getIndividuals(pairs) {
