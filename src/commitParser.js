@@ -15,12 +15,13 @@ class CommitsParser {
   }
 
   getPairs(messages) {
-    return messages.map((msg) => {
+    const regex = this.regex;
+    return messages.map(function(msg) {
       const pair = [];
-      const matches = this.regex.exec(msg);
+      const matches = regex.exec(msg);
       if (matches && matches[1]) pair.push(matches[1]);
       if (matches && matches[2]) pair.push(matches[2]);
-      this.regex.lastIndex = 0;
+      regex.lastIndex = 0;
       return pair;
     })
   }

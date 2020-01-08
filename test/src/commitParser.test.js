@@ -8,14 +8,14 @@ function contains(element, elements) {
 describe('commitsParser', () => {
 
   let messages = [],
-    regexp = /\|([\w]*)(?:\/)?([\w]*)\|/gi;
+    regexp = /\s+([\w]*)?(?:\s*,\s*)?([\w]*)\s*\|/;
 
   before(() => {
     messages = [
-      'b3e567y |Abhikur|: first commit',
-      '4ega564 |Abhikur/Abhishek|: second message',
-      '2e67s88 |Abhi/Abhishek|: third commit',
-      '3b342d4 |Abhi/Abhishek|: fourth commit'
+      'b3e567y [#21] Abhikur | first commit',
+      '4ega564 [#22] Abhikur,Abhishek | second message',
+      '2e67s88 [#23] Abhi, Abhishek | third commit',
+      '3b342d4 [#24] Abhi , Abhishek | fourth commit'
     ];
   });
 
