@@ -9,5 +9,5 @@ app.listen(PORT, 'localhost', (err) => {
   if (err) {
     console.log('Something went wrong while booting server :(')
   }
-  console.log(`Server listening at ${PORT}`)
+  console.log("Server listening at " + PORT)
 });
