@@ -6,9 +6,9 @@ class CommitDataProvider {
     this.regexp = regexp;
   }
 
-  provideData() {
+  getCommits(path) {
     const commitParser = new CommitParser(this.regexp);
-    return commitParser.parse(this.commitFetcher.fetch());
+    return commitParser.parse(this.commitFetcher.fetch(path));
   }
 }
 

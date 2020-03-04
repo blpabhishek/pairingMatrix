@@ -5,8 +5,12 @@ class CommitFetcher {
     this.since = since;
   }
 
-  fetch() {
-    const commitsString = shell.exec("git log --oneline --since='" + this.since + "'", {silent: true}).stdout;
+  fetch(dir) {
+    let gitLogCommand = "git log --oneline --since='" + this.since + "'";
+    if (dir)
+      gitLogCommand = 'cd ' + dir + '&&' + gitLogCommand;
+
+    const commitsString = shell.exec(gitLogCommand, { silent: true }).stdout;
     const commits = commitsString.split('\n');
     commits.pop();
     return commits;

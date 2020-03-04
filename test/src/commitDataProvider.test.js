@@ -21,7 +21,7 @@ describe('github data provider', () => {
     const regex = /\|\w*\/\w*\||\|\w*\|/gi;
     const commitDataProvider = new CommitDataProvider(dataFetcher, regex);
 
-    const data = commitDataProvider.provideData();
+    const data = commitDataProvider.getCommits();
 
     assert.equal(data.individuals.length, 1);
     assert.equal(data.individuals[0].pair[0], 'Abhishek');

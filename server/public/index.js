@@ -4,6 +4,8 @@ var margin = 100;
 var degreeFactor = 180 / Math.PI;
 var circumferenceRadius = 300;
 var colors = d3.scaleOrdinal(d3.schemeCategory20);
+var searchParams = new URL(document.location).searchParams;
+var repo = searchParams.get('repo');
 
 var individualCommitScale = d3.scaleLinear()
   .domain([0, 30])
@@ -152,7 +154,7 @@ function setWeeks() {
 function show() {
   var weeks = $('#weeks')[0].value + ' weeks ago';
   $('.chartArea')[0].innerHTML = "";
-  $.post('commits', {weeks: weeks}, function (res) {
+  $.post('commits', { weeks: weeks, repo: repo }, function (res) {
     showPairingMatrix(res.individuals, res.validPairs, res.committers);
   })
 }
@@ -161,7 +163,7 @@ $(document).ready(function () {
 
   setWeeks();
 
-  $.post('commits', {weeks: '1 weeks ago'}, function (res) {
+  $.post('commits', { weeks: '1 weeks ago', repo: repo }, function (res) {
     showPairingMatrix(res.individuals, res.validPairs, res.committers);
   });
 });

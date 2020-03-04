@@ -6,7 +6,7 @@ const yml = require('js-yaml');
 const fs = require('fs');
 
 module.exports = (app) => {
-  app.use(bodyParser.urlencoded({extended: true}));
+  app.use(bodyParser.urlencoded({ extended: true }));
   app.use(express.static(__dirname + '/public'));
   app.use(express.static(__dirname + '/lib'));
 
@@ -16,15 +16,17 @@ module.exports = (app) => {
     };
     try {
       config = yml.safeLoad(fs.readFileSync('config.yml', 'utf8'))
-      console.log(config)
+      console.log(config);
     } catch (err) {
       console.log(err.message);
       console.log("Using default regexp - |story#|Pair1/Pair2| message");
     }
     const weeks = req.body.weeks;
+    const repo = req.body.repo;
+    console.log('fetch ' + weeks + ' commits for repo ' + (repo || '.'));
     const commitFetcher = new CommitFetcher(weeks);
     const commitProvider = new CommitProvider(commitFetcher, new RegExp(config.regexp, 'gi'));
-    const commitData = commitProvider.provideData();
-    res.send(commitData);
+    const commits = commitProvider.getCommits(repo);
+    res.send(commits);
   });
 };
